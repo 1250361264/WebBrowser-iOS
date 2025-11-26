@@ -67,27 +67,6 @@ jobs:
           mkdir -p export
           mv ${NAME}-${VERSION}.ipa export/
 
-
-      - name: Get IPA File Path
-        id: find_ipa
-        run: |
-          IPA_PATH=$(find ./packages -name "*.ipa" | head -n 1)
-          echo "IPA File: $IPA_PATH"
-          echo "ipa_path=$IPA_PATH" >> $GITHUB_ENV
-
-      - name: Rename IPA File
-        run: |
-          NAME="${{ env.NAME }}"
-          VERSION="${{ env.VERSION }}"
-          IPA_PATH="${{ env.ipa_path }}"
-          DIR=$(dirname "$IPA_PATH")
-          NEW_NAME="${NAME}-${VERSION}.ipa"
-          NEW_PATH="${DIR}/${NEW_NAME}"
-          mv "$IPA_PATH" "$NEW_PATH"
-          echo "Renamed IPA: $NEW_PATH"
-          echo "ipa_path=$NEW_PATH" >> $GITHUB_ENV
-          ls -l $DIR
-
       - name: Publish IPA
         uses: softprops/action-gh-release@v1
         with:

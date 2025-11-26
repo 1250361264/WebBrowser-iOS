@@ -96,6 +96,5 @@ jobs:
           name: '${{ env.NAME }} v${{ env.VERSION }}'
           body: '${{ env.PUBBODY }}'
           draft: false
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

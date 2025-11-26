@@ -26,24 +26,6 @@ jobs:
         with:
           xcode-version: '16.4.0'
 
-      #      - name: Install Dependencies (Homebrew & Theos)
-      #        run: |
-      #          echo "Installing Homebrew..."
-      #          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-      #
-      #          echo "Setting up Homebrew..."
-      #          echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
-      #          eval "$(/opt/homebrew/bin/brew shellenv)"
-      #
-      #          echo "Installing Theos dependencies..."
-      #          brew install ldid dpkg
-      #
-      #          echo "Cloning Theos..."
-      #          git clone --recursive https://github.com/theos/theos.git $HOME/theos
-      #          echo 'export THEOS=$HOME/theos' >> $HOME/.zshrc
-      #          export THEOS=$HOME/theos
-
-
       - uses: pnpm/action-setup@v3
         with:
           version: latest

@@ -12,7 +12,7 @@
         "pakeplus",
         "pakeplus-android"
     ],
-    "author": "1024小神",
+    "author": "xiaochaodada",
     "license": "ISC",
     "dependencies": {
         "commander": "^13.1.0",

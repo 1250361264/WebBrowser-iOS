@@ -1,9 +1,9 @@
-Package: com.pakeplus.xiao.shen
-Name: PakePlus
-Version: 0.0.1
+Package: com.webbrowser.ios
+Name: WebBrowser
+Version: 1.1.0
 Architecture: iphoneos-arm
-Description: 一个小工具
-Maintainer: 1024小神
-Author: 1024小神
+Description: iOS WebView browser shell
+Maintainer: xiaochaodada
+Author: xiaochaodada
 Section: Tweaks
 Depends: mobilesubstrate (>= 0.9.5000)

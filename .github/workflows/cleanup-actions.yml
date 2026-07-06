@@ -1,0 +1,57 @@
+name: Cleanup Actions History
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete all workflow runs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          CURRENT_RUN_ID: ${{ github.run_id }}
+        run: |
+          page=1
+          deleted=0
+
+          while true; do
+            response=$(curl -s \
+              -H "Authorization: Bearer ${GH_TOKEN}" \
+              -H "Accept: application/vnd.github+json" \
+              "https://api.github.com/repos/${REPO}/actions/runs?per_page=100&page=${page}")
+
+            ids=$(echo "$response" | jq -r '.workflow_runs[].id')
+
+            if [ -z "$ids" ]; then
+              break
+            fi
+
+            for id in $ids; do
+              if [ "$id" = "$CURRENT_RUN_ID" ]; then
+                echo "Skip current run: $id"
+                continue
+              fi
+
+              curl -s -X DELETE \
+                -H "Authorization: Bearer ${GH_TOKEN}" \
+                -H "Accept: application/vnd.github+json" \
+                "https://api.github.com/repos/${REPO}/actions/runs/${id}"
+
+              echo "Deleted run: $id"
+              deleted=$((deleted + 1))
+            done
+
+            total=$(echo "$response" | jq -r '.total_count')
+            if [ "$page" -ge "$(( (total + 99) / 100 ))" ]; then
+              break
+            fi
+
+            page=$((page + 1))
+          done
+
+          echo "Done. Deleted ${deleted} workflow run(s)."
